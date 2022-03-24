@@ -1,0 +1,30 @@
+# 该文本是开发日记，以时间和问题点来记录
+
+# 2022-03-24
+1、计划该工程使用vue2，实现对openlayers的一些常用功能的组件化，以便在其他工程能快速使用或者用来参考
+参考地址：https://www.jianshu.com/p/0bd970a569ee
+
+2、在线瓦片地图服务资源总结
+参考地址：https://www.cnblogs.com/amadoGrowers/p/13631127.html
+
+3、Map, View以下两种引入都是ok的
+import { Map, View } from 'ol';
+import Map from 'ol/Map';
+import View from 'ol/View';
+
+4、this.map.view.center: transform(this.mapCenter, 'EPSG:4326', 'EPSG:3857')
+EPSG:4326(WGS84)，地理坐标系统。例如厦门坐标：[118.089425, 24.479883]
+EPSG:3857，球体墨卡托，基于墨卡托投影，把WGS84坐标投影到正方形，通常我们使用伪墨卡托显示数据，使用WGS84存储数据。
+默认是墨卡托投影，因此可以定义为：this.map.view.projection: 'EPSG:4326'。
+tips:'EPSG:4326'不能因为格式，空格号等书写错误，否则地图显示会报错。
+
+5、this.map.target = 'map' 目测等同于 this.map.target = this.$refs.rootMap
+以上一个是id = 'map', 一个是ref = 'rootMap'
+
+popupText: '弹窗初始化文字',
+iconImg: require('@/assets/mark.jpeg'), // 文件地址 String[url]
+pointList:[
+  [ 118.089425, 24.479883 ]
+]
+
+

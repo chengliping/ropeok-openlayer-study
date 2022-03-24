@@ -1,0 +1,35 @@
+{
+  "comment":{
+    "dropConsole": "是否打包移除console",
+    "api": "远程API工程名",
+    "api_local": "本地API工程名",
+    "server": "api服务器地址",
+    "publishServer": {
+      "host": "部署服务器Ip",
+      "username": "用户名",
+      "port": "端口，默认22",
+      "privateKey": "本地公钥地址，可选",
+      "serverPath": "服务器上前端dist所在目录",
+      "password": "服务器密码，可选",
+      "serverNginxConfPath": "服务器nginx配置文件目录",
+      "localNginxConfPath": "本地nginx配置文件目录",
+      "redirectRoute": "生产环境/重定向的首页路由"
+    }
+  },
+  "dropConsole": true,
+  "api": "/remove-api",
+  "api_local": "/local-api/json",
+  "api_local_port": 10999,
+  "server": "http://localhost:3000",
+  "publishServer": {
+    "host": "www.linchaoqun.com",
+    "username": "root",
+    "port": "22",
+    "privateKey": "",
+    "serverPath": "/root",
+    "password": "QCLgequn06",
+    "serverNginxConfPath": "/root/nginx",
+    "localNginxConfPath": "../config/nginx.conf"
+  },
+  "redirectRoute": "/index"
+}

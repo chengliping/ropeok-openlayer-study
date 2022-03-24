@@ -1,0 +1,11 @@
+{
+  "code": 200,
+  "message": "发送成功",
+  "success": true,
+  "result": {
+    "id": "2601020030400000001",
+    "plateNumber": "渝A88A68",
+    "lon": 118,
+    "lat": 24
+  }
+}
