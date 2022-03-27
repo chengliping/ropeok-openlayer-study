@@ -1,6 +1,6 @@
 <!-- 点标注组件 -->
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
@@ -11,16 +11,35 @@ import { Style, Icon, Stroke, Fill, Text } from 'ol/style';
 import { Vector as LayerVector } from 'ol/layer';
 export default {
   name: 'MapIconMark',
-  render() {
-    return this.$parent.preventChildrenRender;
-  },
   props: {
-    position: { type: Array },
-    elementName: { type: String },
-    className: { type: String },
-    label: { type: String },
-    icon: { type: String },
-    zIndex: { type: Number }
+    position: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    elementName: {
+      type: String,
+      default: ''
+    },
+    className: {
+      type: String,
+      default: ''
+    },
+    label: {
+      type: String,
+      default: ''
+    },
+    icon: {
+      type: String,
+      default: ''
+    },
+    zIndex: {
+      type: Number,
+      default: () => {
+        return 0;
+      }
+    }
   },
   data() {
     return {
@@ -121,6 +140,9 @@ export default {
       });
       _that.$parent.$data.mapData.addLayer(_that.iconLayer);
     }
+  },
+  render() {
+    return this.$parent.preventChildrenRender;
   }
 };
 </script>

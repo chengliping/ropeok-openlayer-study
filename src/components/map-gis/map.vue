@@ -16,8 +16,18 @@
         :position="mapIconData.position"
         :label="mapIconData.label"
         :icon="mapIconData.icon"
-        :elementName="mapIconData.elementName"
-        :className="mapIconData.className"
+        :element-name="mapIconData.elementName"
+        :class-name="mapIconData.className"
+      />
+
+      <!-- 折线 -->
+      <map-broken-line
+        :point-list="mapBrokenLineData.pointList"
+        :line-color="mapBrokenLineData.lineColor"
+        :line-width="mapBrokenLineData.lineWidth"
+        :line-dash="mapBrokenLineData.lineDash"
+        :element-name="mapBrokenLineData.elementName"
+        :class-name="mapBrokenLineData.className"
       />
     </div>
     <div class="click-center">
@@ -33,9 +43,13 @@ import * as olControl from 'ol/control';
 import mapConfig from '../../../config/map-config';
 
 import MapIconMark from './map-icon-mark'; // 点标注
+import MapBrokenLine from './map-broken-line'; // 折线
 export default {
   name: 'MapGisShow',
-  components: {MapIconMark},
+  components: {
+    MapIconMark, // 点标注
+    MapBrokenLine // 折线
+  },
   data() {
     return {
       mapData: null,
@@ -50,6 +64,22 @@ export default {
         label: '这个是中心位置', // 标注点名称 String， 非必须， 默认为 null
         elementName: '点标识id', // 标注点识别名称 String， 可以通过 feature.get('name') 获取到， 非必须， 默认为 'el-mapIconMark'
         className: 'map-icon-mark' // 图层的class String， 非必须，默认为 'map-icon-mark'
+      },
+
+      // 折线
+      mapBrokenLineData: {
+        pointList: [ // 线条所有的点数组 Array[array]， 必须
+          [118.13073235993387, 24.533700182779317],
+          [118.1582035446644, 24.521075024946217],
+          [118.14371693377497, 24.512703850610738],
+          [118.16693011169436, 24.50542969976235]
+        ],
+        elementName: '地图线条', //弹窗标识别名 String， 非必须，默认为 'el-mapLineString'
+        lineColor: 'rgba(0,77,168,0.9)', // 线条颜色 String，非必须，默认为 '#409eff'
+        lineWidth: 2, // 线条宽度 Number，非必须，默认为 2
+        lineDash: [10], // 虚线 Array[number]， 是否使用虚线，默认为 null
+        className: 'map-line-string', // 图层的class String， 非必须， 默认 "map-line-string"
+        zIndex: 300 // 图层z轴高度， 非必须， 默认 300
       }
     };
   },
