@@ -1,6 +1,6 @@
 <!-- 多边形 -->
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
@@ -11,9 +11,6 @@ import { Vector as LayerVector } from 'ol/layer';
 import { Polygon } from 'ol/geom';
 export default {
   name: 'MapPolygon',
-  render() {
-    return this.$parent.preventChildrenRender;
-  },
   props: {
     pointList: {
       type: Array,
@@ -159,6 +156,9 @@ export default {
       });
       this.$parent.$data.mapData.addLayer(this.polygonLayer);
     }
+  },
+  render() {
+    return this.$parent.preventChildrenRender;
   }
 };
 </script>

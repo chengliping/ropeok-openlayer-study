@@ -32,15 +32,26 @@
 
       <!-- 多边形 -->
       <map-polygon
-        :pointList="mapPolygonData.pointList"
-        :fillColor="mapPolygonData.fillColor"
-        :lineColor="mapPolygonData.lineColor"
-        :lineWidth="mapPolygonData.lineWidth"
-        :lineDash="mapPolygonData.lineDash"
-        :elementName="mapPolygonData.elementName"
-        :className="mapPolygonData.className"
+        :point-list="mapPolygonData.pointList"
+        :fill-color="mapPolygonData.fillColor"
+        :line-color="mapPolygonData.lineColor"
+        :line-width="mapPolygonData.lineWidth"
+        :line-dash="mapPolygonData.lineDash"
+        :element-name="mapPolygonData.elementName"
+        :class-name="mapPolygonData.className"
       />
 
+      <!-- 圆形 -->
+      <map-circle
+        :position="mapCircleData.position"
+        :radius="mapCircleData.radius"
+        :fill-color="mapCircleData.fillColor"
+        :line-color="mapCircleData.lineColor"
+        :line-width="mapCircleData.lineWidth"
+        :line-dash="mapCircleData.lineDash"
+        :element-name="mapCircleData.elementName"
+        :class-name="mapCircleData.className"
+      />
     </div>
     <div class="click-center">
       {{ clickCenter }}
@@ -57,12 +68,14 @@ import mapConfig from '../../../config/map-config';
 import MapIconMark from './map-icon-mark'; // 点标注
 import MapBrokenLine from './map-broken-line'; // 折线
 import MapPolygon from './map-polygon'; // 多边形
+import MapCircle from './map-circle'; // 圆形
 export default {
   name: 'MapGisShow',
   components: {
     MapIconMark, // 点标注
     MapBrokenLine, // 折线
-    MapPolygon // 多边形
+    MapPolygon, // 多边形
+    MapCircle // 圆形
   },
   data() {
     return {
@@ -111,6 +124,18 @@ export default {
         lineWidth: 2, // 多边形线条宽度 Number，非必须，默认为 2
         lineDash: null, // 多边形虚线 Array[number], 是否使用虚线 ，默认为 null
         className: 'map-polygon' // 图层的class String, 非必须，默认为 'map-polygon'
+      },
+
+      // 圆形图层数据
+      mapCircleData: {
+        position: [ 117.99444931988718, 24.479064926250462 ], // 圆中心点 Array， 必须
+        radius: 1000, // 圆半径 number ，默认为 100
+        fillColor: 'rgba(255,255,0,0.5)', // 圆形填充颜色，非必须，默认为 'rgba(255,255,255,0.5)'
+        elementName: '圆形叠加', // 圆形识别名称 String, 非必须，默认为 'el-mapCircle'
+        lineColor: '#409eff', // 圆形线条颜色 String，非必须，默认为 '#409eff'
+        lineWidth: 2, // 圆形线条宽度 Number，非必须，默认为 2
+        lineDash: [20, 5], // 圆形虚线 Array[number], 是否使用虚线 ，默认为 null
+        className: 'map-circle' // 图层的class String, 非必须，默认为 'map-circle'
       }
     };
   },
