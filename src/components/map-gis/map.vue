@@ -29,6 +29,18 @@
         :element-name="mapBrokenLineData.elementName"
         :class-name="mapBrokenLineData.className"
       />
+
+      <!-- 多边形 -->
+      <map-polygon
+        :pointList="mapPolygonData.pointList"
+        :fillColor="mapPolygonData.fillColor"
+        :lineColor="mapPolygonData.lineColor"
+        :lineWidth="mapPolygonData.lineWidth"
+        :lineDash="mapPolygonData.lineDash"
+        :elementName="mapPolygonData.elementName"
+        :className="mapPolygonData.className"
+      />
+
     </div>
     <div class="click-center">
       {{ clickCenter }}
@@ -44,11 +56,13 @@ import mapConfig from '../../../config/map-config';
 
 import MapIconMark from './map-icon-mark'; // 点标注
 import MapBrokenLine from './map-broken-line'; // 折线
+import MapPolygon from './map-polygon'; // 多边形
 export default {
   name: 'MapGisShow',
   components: {
     MapIconMark, // 点标注
-    MapBrokenLine // 折线
+    MapBrokenLine, // 折线
+    MapPolygon // 多边形
   },
   data() {
     return {
@@ -80,6 +94,23 @@ export default {
         lineDash: [10], // 虚线 Array[number]， 是否使用虚线，默认为 null
         className: 'map-line-string', // 图层的class String， 非必须， 默认 "map-line-string"
         zIndex: 300 // 图层z轴高度， 非必须， 默认 300
+      },
+
+      // 多边形图层数据
+      mapPolygonData: {
+        pointList:[
+          [ 117.99873280768396, 24.529627248390202 ],
+          [ 118.03365382795336, 24.512233122928624 ],
+          [ 118.01426145677569, 24.500721081836705 ],
+          [ 117.99904930834772, 24.5042683032589 ],
+          [ 117.98478800301554, 24.53176094566155 ]
+        ],
+        fillColor: 'rgba(255,0,0,0.8)', // 多边形填充颜色，非必须，默认为 'rgba(0,0,0,0.8)'
+        elementName: '地图多边形', // 多边形识别名称 String, 非必须，默认为 'el-mapPolygon'
+        lineColor: 'rgba(0,0,0,0.5)', // 多边形线条颜色 String，非必须，默认为 '#409eff'
+        lineWidth: 2, // 多边形线条宽度 Number，非必须，默认为 2
+        lineDash: null, // 多边形虚线 Array[number], 是否使用虚线 ，默认为 null
+        className: 'map-polygon' // 图层的class String, 非必须，默认为 'map-polygon'
       }
     };
   },
