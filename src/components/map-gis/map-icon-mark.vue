@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { Vector as SourceVector, Cluster } from 'ol/source';
+import { Vector as SourceVector } from 'ol/source';
 import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import { Style, Icon, Stroke, Fill, Text } from 'ol/style';
