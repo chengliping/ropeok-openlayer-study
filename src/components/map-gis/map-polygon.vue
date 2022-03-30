@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { Vector as SourceVector, Cluster } from 'ol/source';
+import { Vector as SourceVector } from 'ol/source';
 import { Feature } from 'ol';
 import {Style, Stroke, Fill, Text} from 'ol/style';
 import { Vector as LayerVector } from 'ol/layer';
