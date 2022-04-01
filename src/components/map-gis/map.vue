@@ -52,6 +52,30 @@
         :element-name="mapCircleData.elementName"
         :class-name="mapCircleData.className"
       />
+
+      <!-- 自定义覆盖物 -->
+      <MapOverlay
+        :position="mapOverlayData.position"
+        :offset="mapOverlayData.offset"
+        :className="mapOverlayData.className">
+        <div>
+          <img :src="mapOverlayData.img" alt="">
+          <br />
+          <h5>自定义覆盖物</h5>
+        </div>
+      </MapOverlay>
+
+      <!-- 弹出窗体 -->
+      <MapPopup
+        :position="mapPopupData.position"
+        :title="mapPopupData.title"
+        :offset="mapPopupData.offset"
+        :mapShow="mapPopupData.show"
+        @close="mapPopupClose"
+        :className="'map-popup'">
+        {{ mapPopupData.popupText }}
+      </MapPopup>
+
     </div>
     <div class="click-center">
       {{ clickCenter }}
@@ -69,13 +93,17 @@ import MapIconMark from './map-icon-mark'; // 点标注
 import MapBrokenLine from './map-broken-line'; // 折线
 import MapPolygon from './map-polygon'; // 多边形
 import MapCircle from './map-circle'; // 圆形
+import MapOverlay from './map-overlay'; // 自定义覆盖物
+import MapPopup from './map-popup'; // 添加弹窗
 export default {
   name: 'MapGisShow',
   components: {
     MapIconMark, // 点标注
     MapBrokenLine, // 折线
     MapPolygon, // 多边形
-    MapCircle // 圆形
+    MapCircle, // 圆形
+    MapOverlay, // 自定义覆盖物
+    MapPopup // 添加弹窗
   },
   data() {
     return {
@@ -136,6 +164,24 @@ export default {
         lineWidth: 2, // 圆形线条宽度 Number，非必须，默认为 2
         lineDash: [20, 5], // 圆形虚线 Array[number], 是否使用虚线 ，默认为 null
         className: 'map-circle' // 图层的class String, 非必须，默认为 'map-circle'
+      },
+
+      // 自定义覆盖物
+      mapOverlayData: {
+        position: [ 118.14654666428568, 24.46173651490975 ], // 标注中心点 Array, 必须
+        className: 'map-overlay', // 设置自定义图层的class String ，非必须， 默认 'map-overlay'
+        offset: [0, 0], // 设置自定义图层的偏移量 Array[number] ，非必须,默认[0, 0]
+        img: require('./images/blue_mark.png') // slot
+      },
+
+      // 弹出窗体图层数据
+      mapPopupData:{
+        position: [ 118.11625111346247, 24.499098345382695 ], // 弹窗中心点 Array[array]， 必须
+        title: '弹窗标题', // 弹窗标题 String，非必须，默认为 ' '
+        popupText: '弹出窗体的内容',
+        show: false, // 弹窗显隐 Boolean，必须，默认为 true
+        offset:[0, 0], // 弹窗偏移 Array[number]，必须，默认为 [0, 0]
+        className: 'map-popup' // 图层的class String，非必须，默认为 'map-popup'
       }
     };
   },
@@ -182,6 +228,40 @@ export default {
       if (evt.dragging) {
         return false;
       }
+
+      this.mapPopupOpen(evt); // 打开弹窗
+    },
+    /**
+     * 打开弹窗
+     * 当移动到point上时
+     * */
+    mapPopupOpen(evt) {
+      // 获取地图上的重叠像素（用来获得叠加图层）
+      const pixel = this.mapData.getEventPixel(evt.originalEvent);
+      const hit = this.mapData.hasFeatureAtPixel(pixel);
+      // 获取地图上的feature
+      const feature = this.mapData.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+        return feature;
+      });
+      // 获取叠加图层对像素叠加图层（hit）设置鼠标样式（给标注点添加鼠标经过样式）
+      this.mapData.getTarget().style.cursor = hit ? 'pointer' : '';
+      // 鼠标移动到点标注的时候显示弹出窗体，feature.get('name') 可以获取标注标题，如果设置了的话
+      if(feature && feature.get('name') === this.mapIconData.elementName){
+        // 显示弹出窗体
+        this.mapPopupData.show = true;
+        // 弹出窗体的内容
+        this.mapPopupData.popupText = `当前坐标${this.mapIconData.position}`;
+        // 弹出窗体的位置
+        this.mapPopupData.position = this.mapIconData.position;
+      }
+    },
+    /**
+     * 关闭弹出窗体事件
+     * @param e
+     */
+    mapPopupClose(e){
+      this.mapPopupData.show = false;
+      this.mapPopupData.popupText = '';
     }
   }
 };

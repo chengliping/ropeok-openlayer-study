@@ -7,6 +7,7 @@
     <div class="click-center">
       {{ clickCenter }}
     </div>
+    <h2 ref="mapOverlay">我是自定义覆盖物啦</h2>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import { Feature } from 'ol'; // feature
 import {Point, Polygon, Circle, LineString} from 'ol/geom'; // 几何体
 import { Style, Icon, Fill, Stroke, Text } from 'ol/style'; // style
 import { Vector as LayerVector } from 'ol/layer'; // layer
+import Overlay from 'ol/Overlay'; // 覆盖物
 export default {
   name: 'MapNoGisShow',
   data() {
@@ -30,6 +32,7 @@ export default {
       mapPolygonLayer: null, // 添加多边形图层
       mapCircleLayer: null, // 添加圆形图层
       mapLineLayer: null, // 添加线
+      mapOverlayLayer: null, // 添加自定义覆盖物
       clickCenter: [0, 0] // 点击显示坐标
     };
   },
@@ -40,6 +43,7 @@ export default {
     this.addMapPolygon(); // 添加多边形
     this.addMapCircle(); // 添加圆形
     this.addMapLine(); // 添加线
+    this.addMapOverlay(); // 添加自定义覆盖物
   },
   methods: {
     /**
@@ -83,6 +87,7 @@ export default {
       this.mapObject.getView().animate({
         center: evt.coordinate
       });
+      // console.log(evt.coordinate); // 点击的经纬度
     },
     /**
      * 鼠标划过地图事件
@@ -266,6 +271,21 @@ export default {
         })
       });
       this.mapObject.addLayer(this.mapLineLayer);
+    },
+    /**
+     * 添加自定义覆盖物
+     */
+    addMapOverlay() {
+      if(this.mapOverlayLayer) this.mapObject.removeOverlay(this.mapOverlayLayer);
+
+      this.mapOverlayLayer = new Overlay({
+        position: [ 118.1450476000662, 24.46852539920972 ],
+        offset: [0, 0],
+        element: this.$refs.mapOverlay, // document.getElementById("textInfo")
+        positioning: 'center-center',
+        stopEvent: false
+      });
+      this.mapObject.addOverlay(this.mapOverlayLayer);
     }
   }
 };
