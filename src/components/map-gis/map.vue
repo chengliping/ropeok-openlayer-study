@@ -20,6 +20,18 @@
         :class-name="mapIconData.className"
       />
 
+      <!-- pointList 循环使用的方法 添加多个矢量点 -->
+      <template v-for="(item, index) of mapIconData.pointList">
+        <map-icon-mark
+          :key="'map-icon-mark' + index"
+          :position="item"
+          :label="'标记点' + String(index)"
+          :icon="mapIconData.icon"
+          :element-name="mapIconData.elementName"
+          :class-name="mapIconData.className"
+        />
+      </template>
+
       <!-- 折线 -->
       <map-broken-line
         :point-list="mapBrokenLineData.pointList"
@@ -128,6 +140,11 @@ export default {
       // 点标注图层
       mapIconData: {
         position: [118.089425, 24.479883], // 标注中心点的 array， 必须
+        pointList: [
+          [118.10852501039507, 24.527215942485814],
+          [118.0959414268017, 24.51847462330628],
+          [118.1354382956505, 24.483313545330052]
+        ],
         icon: require('./images/red_mark.png'), // 文件地址 String[url]，必须，默认为null
         label: '这个是中心位置', // 标注点名称 String， 非必须， 默认为 null
         elementName: '点标识id', // 标注点识别名称 String， 可以通过 feature.get('name') 获取到， 非必须， 默认为 'el-mapIconMark'
