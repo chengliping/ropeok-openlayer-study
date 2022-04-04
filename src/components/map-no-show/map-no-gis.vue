@@ -14,7 +14,7 @@
 <script>
 import 'ol/ol.css';
 import Map from 'ol/Map'; // map
-import { TileArcGISRest, Vector as SourceVector } from 'ol/source'; // 源
+import { TileArcGISRest, Vector as SourceVector, Cluster } from 'ol/source'; // 源
 import TileLayer from 'ol/layer/Tile'; // 瓦片
 import View from 'ol/View'; // 视图
 import * as olControl from 'ol/control'; // 控件
@@ -33,6 +33,7 @@ export default {
       mapCircleLayer: null, // 添加圆形图层
       mapLineLayer: null, // 添加线
       mapOverlayLayer: null, // 添加自定义覆盖物
+      mapCollectionLayer: null, // 添加海量点
       clickCenter: [0, 0] // 点击显示坐标
     };
   },
@@ -44,6 +45,7 @@ export default {
     this.addMapCircle(); // 添加圆形
     this.addMapLine(); // 添加线
     this.addMapOverlay(); // 添加自定义覆盖物
+    this.addMapPointCollection(); // 添加海量点
   },
   methods: {
     /**
@@ -286,6 +288,56 @@ export default {
         stopEvent: false
       });
       this.mapObject.addOverlay(this.mapOverlayLayer);
+    },
+    /**
+     * 添加海量点
+     */
+    addMapPointCollection() {
+      if(this.mapCollectionLayer) this.mapCollectionLayer.getSource().clear();
+
+      // 创建Feature对象集合
+      const features = [];
+      const pointList = [
+        [118.03985241298678, 24.56660552297402],
+        [118.17225966100695, 24.49398069058228],
+        [118.23586288337708, 24.548048659904484],
+        [118.04870630244483, 24.396473587403964],
+        [118.04870630244483, 24.406473587403964]
+      ];
+      for (let i = 0; i < pointList.length; i++) {
+        features.push(
+          new Feature({
+            geometry: new Point(pointList[i])
+          })
+        );
+      }
+      this.mapCollectionLayer = new LayerVector({
+        className: 'map-point-collection',
+        zIndex: 400,
+        source: new Cluster({
+          distance: 100, // 收起点的间距  number
+          source: new SourceVector({
+            features: features
+          })
+        }),
+        style: (feature) => {
+          const size = feature.get('features').length; // 获取该要素所在聚合群的要素数量
+          return new Style({
+            image: new Icon({
+              src: require('../map-gis/images/blue_mark.png')
+            }),
+            text: new Text({
+              text: size.toString(),
+              fill: new Fill({
+                color: '#fff'
+              }),
+              offsetX: 0,
+              offsetY: 0
+            }) // this.getTextStyle(size.toString())
+          });
+        }
+      });
+      this.mapObject.addLayer(this.mapCollectionLayer);
     }
   }
 };

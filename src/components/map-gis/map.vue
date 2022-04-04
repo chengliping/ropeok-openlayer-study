@@ -76,6 +76,17 @@
         {{ mapPopupData.popupText }}
       </MapPopup>
 
+      <!-- 海量点 -->
+      <MapPointCollection
+        :pointList="mapPointCollectionData.pointList"
+        :bg-img="mapPointCollectionData.bgImg"
+        :distance="mapPointCollectionData.distance"
+        :fillColor="mapPointCollectionData.fillColor"
+        :fontColor="mapPointCollectionData.fontColor"
+        :zIndex='mapPointCollectionData.zIndex'
+        :offset="mapPointCollectionData.offset">
+      </MapPointCollection>
+
     </div>
     <div class="click-center">
       {{ clickCenter }}
@@ -95,6 +106,7 @@ import MapPolygon from './map-polygon'; // 多边形
 import MapCircle from './map-circle'; // 圆形
 import MapOverlay from './map-overlay'; // 自定义覆盖物
 import MapPopup from './map-popup'; // 添加弹窗
+import MapPointCollection from './map-point-collection'; // 添加海量点
 export default {
   name: 'MapGisShow',
   components: {
@@ -103,7 +115,8 @@ export default {
     MapPolygon, // 多边形
     MapCircle, // 圆形
     MapOverlay, // 自定义覆盖物
-    MapPopup // 添加弹窗
+    MapPopup, // 添加弹窗
+    MapPointCollection // 添加海量点
   },
   data() {
     return {
@@ -182,7 +195,25 @@ export default {
         show: false, // 弹窗显隐 Boolean，必须，默认为 true
         offset:[0, 0], // 弹窗偏移 Array[number]，必须，默认为 [0, 0]
         className: 'map-popup' // 图层的class String，非必须，默认为 'map-popup'
+      },
+
+      // 海量点图层数据
+      mapPointCollectionData: {
+        pointList: [
+          [118.03985241298678, 24.56660552297402],
+          [118.17225966100695, 24.49398069058228],
+          [118.23586288337708, 24.548048659904484],
+          [118.04870630244483, 24.396473587403964],
+          [118.04870630244483, 24.406473587403964]
+        ],
+        distance: 100, // 收起点的间距  number，必须，默认为 40
+        zIndex: 500, // 图层z轴高度， 非必须， 默认 400
+        offset:[0, 2], // 文字偏移距离 [x,y]， 非必须， 默认 [0,0]
+        fontColor: '#ffeb00', // 文字的颜色 string （色彩标识，支持rgba），默认'#fff'(如果去掉文字那么直接rgba透明度设置为0)
+        fillColor: '#06d073', // 文字的背景颜色 string（色彩标识，支持rgba），默认'#f00'(如果去不要背景颜色那么直接rgba透明度设置为0)
+        bgImg: require('./images/blue_mark.png') // 设置背景图，如果设置了此那么文字背景可以不设置
       }
+
     };
   },
   mounted() {
