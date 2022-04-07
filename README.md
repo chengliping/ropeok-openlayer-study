@@ -28,4 +28,4 @@
 |  map-gis | 将map中常见的功能以组件展示 map.vue 是展示页面 | 2022-03-24 ｜
 |  map-no-gis | map中常见的功能直接展示,xmind整理，进一步熟悉openlayers | 2022-03-29 ｜
 |  research | 计划写一个企业或部门介绍页面，目前是空白页面 | 2022-03-27 ｜
-
+|  ol-map-study | openlayer 3 中文文档学习 | 2022-04-07 ｜
